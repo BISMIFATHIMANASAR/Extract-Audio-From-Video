@@ -7,4 +7,4 @@ This program allows you to extract the audio from a video and save it as an audi
 - MP3 (.mp3)
 - FLAC (.flac) lossless compression, no quality loss.
 - ALAC
-- Vorbis (.ogg).
+- Vorbis (.ogg)
