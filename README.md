@@ -6,5 +6,5 @@ This program allows you to extract the audio from a video and save it as an audi
 - AAC (.m4a extension, .aac results in no seekbar when playing the audio in foobar2000).
 - MP3 (.mp3)
 - FLAC (.flac) lossless compression, no quality loss.
-- ALAC
+- ALAC (.m4a) lossless compression, no quality loss.
 - Vorbis (.ogg)
