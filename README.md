@@ -8,3 +8,8 @@ This program allows you to extract the audio from a video and save it as an audi
 - FLAC (.flac) lossless compression, no quality loss.
 - ALAC (.m4a) lossless compression, no quality loss.
 - Vorbis (.ogg)
+
+# Notes:
+- Selecting MP3 means that if the original audio contains more than 2 channels (e.g DTS HD, Dolby Digital), the audio will be downmixed to stereo
+- FLAC or ALAC results in zero quality loss. The downside is larger file size.
+- If unsure as to which codec to choose, select MP3 or AAC as they are most widely supported by players.
