@@ -6,12 +6,13 @@
 ***Nero AAC is only compatible with Windows or Linux***
 
 This program allows you to extract the audio from a video and save it as an audio file. You are also able to choose the output audio codec. Options:
-- AAC (.m4a extension, .aac results in no seekbar when playing the audio in foobar2000).
+- MP3 (.mp3) - "-qscale:a 0" = LAME VBR V0.
+- FFmpeg's native AAC encoder (.m4a extension, .aac results in no seekbar when playing the audio in foobar2000).
 - Nero AAC (.m4a)
-- MP3 (.mp3)
-- FLAC (.flac) lossless compression, no quality loss.
-- ALAC (.m4a) lossless compression, no quality loss.
-- Vorbis (.ogg)
+- WAV (.wav) - lossless file, but pointless if the orignal audio file is not lossless, unless you need/want a .wav file. Largest file size.
+- FLAC (.flac) - lossless compression, no quality loss.
+- ALAC (.m4a) - lossless compression, no quality loss.
+- Vorbis (.ogg) - "-qscale:a 10" is used. Highest VBR quality setting for libvorbis.
 - Opus (.opus)
 
 # Notes:
