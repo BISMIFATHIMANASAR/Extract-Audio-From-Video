@@ -1,7 +1,7 @@
 # Extract Audio From Video
 ***FFmpeg is a prerequisite. Please download and install. https://www.ffmpeg.org/download.html***
 
-***The program (extract-audio.py) and the video file must be in the same directory, as well as the Nero AAC encoder if you wish to use it.
+***The program (extract-audio.py) and the video file must be in the same directory, as well as the Nero AAC encoder if you wish to use it.***
 
 ***Nero AAC is only compatible with Windows or Linux***
 
