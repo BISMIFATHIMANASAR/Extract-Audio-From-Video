@@ -33,18 +33,12 @@ print("What would you like the audio codec to be? You can choose from one of the
 print("\n")
 
 # Define the choice of audio ffmpeg_parameters.
-codec_options = ["MP3", "AAC", "FLAC", "ALAC", "Vorbis"]
+codec_options = ["MP3", "AAC (FFMpeg's native encoder)", "Nero AAC", "FLAC", "ALAC", "Vorbis", "Opus"]
 
 for codec_number, codec in enumerate(codec_options, 1):
     print("{}. {}".format(codec_number, codec))
 
 print("\n")
-print("NOTES:")
-print("- Choose FLAC or ALAC for zero quality loss. The downside is larger file size.")
-print("- If unsure as to which codec to choose, select MP3 or AAC as they are the most widely supported ffmpeg_parameters by players.")
-print("- Selecting MP3 means that if the original audio contains more than 2 channels (e.g DTS HD, Dolby Digital), the audio will be downmixed to stereo.")
-print("\n")
-
 # Prompt the user to select an audio codec.
 chosen_codec = input("To select your desired codec, please enter its associated number (e.g. '1') then press enter: ")
 
@@ -55,14 +49,18 @@ output_name = input("What would you like the audio to be named? ")
 
 # Create a dictionary for the FFmpeg parameters associated with each codec.
 ffmpeg_parameters = {
-    "AAC": ["aac", "-q:a 2", "m4a"], # "-q:a 2" = highest VBR quality setting for FFmpeg's native AAC encoder.
-    "MP3": ["libmp3lame", "-qscale:a 0", "mp3"], # "-qscale:a 0" = VBR V0 (highest quality LAME VBR setting).
-    "FLAC": ["flac", "", "flac"],
-    "ALAC": ["alac", "", "m4a"], 
+    "Opus": ["libopus", "-b:a 512k", "opus"], # highest VBR quality setting for libopus.
+    "AAC (FFmpeg's native encoder)": ["aac", "-q:a 2", "m4a"], # "-q:a 2" = highest VBR quality setting for FFmpeg's native AAC encoder.
+    "MP3": ["libmp3lame", "-qscale:a 0", "mp3"], # "-qscale:a 0" = highest quality VBR setting for libmp3lame).
+    "FLAC": ["flac", "", "flac"], # Lossless compression - no quality loss.
+    "ALAC": ["alac", "", "m4a"], # Lossless compression - no quality loss.
     "Vorbis": ["libvorbis", "-qscale:a 10", "ogg"] # "-qscale:a 10" = highest VBR quality setting for libvorbis.
 }
 
-if chosen_codec in ffmpeg_parameters.keys():
+if chosen_codec == "Nero AAC":
+    os.system('ffmpeg -i "{}" -f wav - | neroAacEnc -q 1 -if - -ignorelength -of "{}".m4a'.format(video_file, output_name))
+
+elif chosen_codec in ffmpeg_parameters.keys():
     codec_specifier, codec_options, extension = ffmpeg_parameters[chosen_codec]
 
     print("Extracting audio and converting to your desired codec...")
