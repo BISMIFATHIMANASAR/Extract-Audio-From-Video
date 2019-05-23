@@ -1,7 +1,9 @@
 # Extract Audio From Video
 ***FFmpeg is a prerequisite. Please download and install. https://www.ffmpeg.org/download.html***
 
-***Nero AAC is only compatible with Windows or Linux.***
+***The program (extract-audio.py) and the video file must be in the same directory, as well as the Nero AAC encoder if you wish to use it.
+
+***Nero AAC is only compatible with Windows or Linux***
 
 This program allows you to extract the audio from a video and save it as an audio file. You are also able to choose the output audio codec. Options:
 - AAC (.m4a extension, .aac results in no seekbar when playing the audio in foobar2000).
