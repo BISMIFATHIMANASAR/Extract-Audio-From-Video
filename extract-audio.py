@@ -1,5 +1,8 @@
 import os
 
+def line_separator():
+    print("----------------------------------------------------------------------------------------------------------------------")
+
 # Define the files in the current directory.
 current_dir_files = os.listdir()
 
@@ -16,7 +19,7 @@ if num_compatible_files >= 1:
     for i in range(len(compatible_file_list)):
         print("{}. {} ".format(i+1, compatible_file_list[i]))
 
-    print("\n")
+    line_separator()
     # Prompt the user to select a video.
     video_file = input("To select a video, please enter its associated number (e.g. '1') then press enter: ")
 
@@ -27,10 +30,12 @@ video_file_index = int(video_file)
 video_file = compatible_file_list[video_file_index - 1]
 
 print("You have selected: {}".format(video_file))
+line_separator()
 
-print("\n")
-print("What would you like the audio codec to be? You can choose from one of the following ffmpeg_parameters:")
-print("\n")
+output_name = input("What would you like the output file to be named? ")
+line_separator()
+
+print("What would you like the audio codec to be? You can choose from one of the following:")
 
 # Define the choice of audio ffmpeg_parameters.
 codec_options = ["MP3", "AAC (FFMpeg's native encoder)", "Nero AAC", "FLAC", "ALAC", "Vorbis", "Opus"]
@@ -38,34 +43,40 @@ codec_options = ["MP3", "AAC (FFMpeg's native encoder)", "Nero AAC", "FLAC", "AL
 for codec_number, codec in enumerate(codec_options, 1):
     print("{}. {}".format(codec_number, codec))
 
-print("\n")
+line_separator()
 # Prompt the user to select an audio codec.
 chosen_codec = input("To select your desired codec, please enter its associated number (e.g. '1') then press enter: ")
 
 chosen_codec_index = int(chosen_codec)
 chosen_codec = codec_options[chosen_codec_index - 1]
 
-output_name = input("What would you like the audio to be named? ")
-
-# Create a dictionary for the FFmpeg parameters associated with each codec.
+# Create a dictionary for the FFmpeg parameters associated with some of the codecs, to reduce code repetition.
 ffmpeg_parameters = {
-    "Opus": ["libopus", "-b:a 512k", "opus"], # highest VBR quality setting for libopus.
-    "AAC (FFmpeg's native encoder)": ["aac", "-q:a 2", "m4a"], # "-q:a 2" = highest VBR quality setting for FFmpeg's native AAC encoder.
-    "MP3": ["libmp3lame", "-qscale:a 0", "mp3"], # "-qscale:a 0" = highest quality VBR setting for libmp3lame).
+    "AAC (FFmpeg's native AAC encoder)": ["aac", "-q:a 2", "m4a"], # "-q:a 2" = highest VBR quality setting for FFmpeg's native AAC encoder.
+    "MP3": ["libmp3lame", "-qscale:a 0", "mp3"], # "-qscale:a 0" = VBR V0 (highest quality LAME VBR setting).
     "FLAC": ["flac", "", "flac"], # Lossless compression - no quality loss.
     "ALAC": ["alac", "", "m4a"], # Lossless compression - no quality loss.
     "Vorbis": ["libvorbis", "-qscale:a 10", "ogg"] # "-qscale:a 10" = highest VBR quality setting for libvorbis.
 }
 
-if chosen_codec == "Nero AAC":
-    os.system('ffmpeg -i "{}" -f wav - | neroAacEnc -q 1 -if - -ignorelength -of "{}".m4a'.format(video_file, output_name))
+if chosen_codec == "Opus":
+    line_separator()
+    target_bitrate = input("Please specify a target bitrate in kilobits per second (kbps). 512 is the maximum. Please enter an integer: ")
+    os.system('ffmpeg -i "{}" -vn -c:a libopus -b:a {}k {}.opus'.format(video_file, target_bitrate, output_name))
+    print("Success! File saved as {}.opus".format(output_name))
+
+elif chosen_codec == "WAV":
+    os.system('ffmpeg -i "{}" -vn "{}".wav'.format(video_file, output_name))
+
+elif chosen_codec == "Nero AAC":
+    os.system('ffmpeg -i "{}" -vn -f wav - | neroAacEnc -q 1 -if - -ignorelength -of "{}".m4a'.format(video_file, output_name))
+    print("Success! File saved as {}.m4a".format(output_name))
 
 elif chosen_codec in ffmpeg_parameters.keys():
     codec_specifier, codec_options, extension = ffmpeg_parameters[chosen_codec]
-
-    print("Extracting audio and converting to your desired codec...")
-    os.system('ffmpeg -loglevel 16 -i "{}" -vn -c:a {} {} {}.{}'.format(video_file, codec_specifier, codec_options,  output_name, extension))
-    print("Success! Audio saved as {}.{}".format(output_name, extension))
+    print("Converting...")
+    os.system('ffmpeg -i "{}" -vn -c:a {} {} "{}".{}'.format(video_file, codec_specifier, codec_options,  output_name, extension))
+    print("Success! File saved as {}.{}".format(output_name, extension))
 
 else:
     print("You did not enter a valid number. Please restart this program.")
