@@ -10,8 +10,8 @@ This program allows you to extract the audio from a video and save it as an audi
 - FFmpeg's native AAC encoder (file extension will be .m4a)
 - Nero AAC (.m4a)
 - WAV (.wav) - lossless file, but pointless if the orignal audio file is not lossless, unless you need/want a .wav file for some reason. Largest file size.
-- FLAC (.flac) - lossless compression, no quality loss.
-- ALAC (.m4a) - lossless compression, no quality loss.
+- FLAC (.flac) - lossless file, no quality loss.
+- ALAC (.m4a) - lossless file, no quality loss.
 - Vorbis (.ogg)
 - Opus (.opus)
 
