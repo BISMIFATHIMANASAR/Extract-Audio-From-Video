@@ -52,11 +52,11 @@ chosen_codec = codec_options[chosen_codec_index - 1]
 
 # Create a dictionary for the FFmpeg parameters associated with some of the codecs, to reduce code repetition.
 ffmpeg_parameters = {
-    "AAC (FFmpeg's native AAC encoder)": ["aac", "-q:a 2", "m4a"], # "-q:a 2" = highest VBR quality setting for FFmpeg's native AAC encoder.
-    "MP3": ["libmp3lame", "-qscale:a 0", "mp3"], # "-qscale:a 0" = VBR V0 (highest quality LAME VBR setting).
-    "FLAC": ["flac", "", "flac"], # Lossless compression - no quality loss.
-    "ALAC": ["alac", "", "m4a"], # Lossless compression - no quality loss.
-    "Vorbis": ["libvorbis", "-qscale:a 10", "ogg"] # "-qscale:a 10" = highest VBR quality setting for libvorbis.
+    "AAC (FFmpeg's native AAC encoder)": ["aac", "-q:a 2", "m4a"],
+    "MP3": ["libmp3lame", "-qscale:a 0", "mp3"], 
+    "FLAC": ["flac", "", "flac"],
+    "ALAC": ["alac", "", "m4a"], 
+    "Vorbis": ["libvorbis", "-qscale:a 10", "ogg"] 
 }
 
 if chosen_codec == "Opus":
@@ -77,8 +77,5 @@ elif chosen_codec in ffmpeg_parameters.keys():
     print("Converting...")
     os.system('ffmpeg -i "{}" -vn -c:a {} {} "{}".{}'.format(video_file, codec_specifier, codec_options,  output_name, extension))
     print("Success! File saved as {}.{}".format(output_name, extension))
-
-else:
-    print("You did not enter a valid number. Please restart this program.")
 
 prevent_window_from_closing = input("You may now close this window.")
