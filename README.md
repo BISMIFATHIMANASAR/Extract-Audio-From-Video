@@ -1,18 +1,18 @@
 # Extract Audio From Video
 ***FFmpeg is a prerequisite. Please download and install. https://www.ffmpeg.org/download.html***
 
-***The program (extract-audio.py) and the video file must be in the same directory, as well as the Nero AAC encoder if you wish to use it.***
+**The program (extract-audio.py) and the video file must be in the same directory, as well as the Nero AAC encoder if you wish to use it.**
 
-***Nero AAC is only compatible with Windows or Linux***
+**Nero AAC is only compatible with Windows or Linux**
 
 This program allows you to extract the audio from a video and save it as an audio file. You are also able to choose the output audio codec. Options:
-- MP3 (.mp3) - "-qscale:a 0" = LAME VBR V0.
-- FFmpeg's native AAC encoder (.m4a extension, .aac results in no seekbar when playing the audio in foobar2000).
+- MP3 (.mp3) - LAME VBR V0.
+- FFmpeg's native AAC encoder (file extension will be .m4a)
 - Nero AAC (.m4a)
-- WAV (.wav) - lossless file, but pointless if the orignal audio file is not lossless, unless you need/want a .wav file. Largest file size.
+- WAV (.wav) - lossless file, but pointless if the orignal audio file is not lossless, unless you need/want a .wav file for some reason. Largest file size.
 - FLAC (.flac) - lossless compression, no quality loss.
 - ALAC (.m4a) - lossless compression, no quality loss.
-- Vorbis (.ogg) - "-qscale:a 10" is used. Highest VBR quality setting for libvorbis.
+- Vorbis (.ogg)
 - Opus (.opus)
 
 # Notes:
